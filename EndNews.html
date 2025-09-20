@@ -159,36 +159,20 @@
       transition: transform 0.3s ease;
     }
 
-    /* حالت پیش‌فرض متن مخفی */
-.card-text {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  padding: 0.5rem;
-  transform: translateY(100%); /* کاملاً پایین و مخفی */
-  opacity: 0;
-  transition: all 1s ease;
-  border-radius: 0 0 10px 10px;
-}
+    .card-text {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 0.5rem;
+      transition: background 0.3s ease;
+    }
 
-/* وقتی موس روی کارت رفت متن بالا بیاید */
-.card:hover .card-text {
-  transform: translateY(0); /* به جای اصلی */
-  opacity: 1;
-}
-
-/* برای ریسپانسیو موبایل */
-@media (max-width: 768px) {
-  .card-text {
-    background: rgba(0,0,0,0.5);
-    padding: 1rem;
-    font-size: 0.9rem;
-  }
-}
-
+    .card:hover {
+      transform: translateY(-5px);
+    }
 
     .card:hover img {
       transform: scale(1.05);
@@ -216,12 +200,12 @@
     left: 0;
     right: 0;
     background: rgba(214, 208, 208, 0.5);
-    color: #f0eaea;
+    color: #fff;
     padding: 1rem;
     border-radius: 0 0 10px 10px;
     opacity: 0;                  /* در حالت عادی پنهان */
     transform: translateY(20px);  /* کمی پایین‌تر برای انیمیشن */
-    transition: all 1s ease;
+    transition: all 0.5s ease;
   }
 
   /* وقتی موس روی اسلاید رفت */
@@ -231,12 +215,12 @@
   }
 
   .slide-text h3, .slide-text p, .slide-text .date, .slide-text .btn-news {
-    color: #0a0909;
+    color: #0f0f0f;
   }
 
   .slide-text .btn-news {
-    background: rgba(255,255,255,0.2);
-    color: #ffffff;
+    background: rgba(56, 39, 39, 0.2);
+    color: #0c0b0b;
     padding: 4px 10px;
     border-radius: 6px;
     display: inline-block;
