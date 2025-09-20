@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اخبار مهم</title>
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <style>
+    body {
+      background: #d9f0f3;
+      direction: rtl;
+      font-family: Tahoma, sans-serif;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 1rem;
+      background-color: #cbe5e5;
+      border-radius: 1rem;
+    }
+
+    .news-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      /* شفافیت بیشتر → کمرنگ‌تر */
+      backdrop-filter: blur(15px);
+      /* blur قوی‌تر برای حس شیشه‌ای واقعی */
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      /* سایه خیلی نرم */
+      color: #222;
+      /* متن تیره برای خوانایی */
+    }
+
+    .news-header h2 {
+      font-size: 1.6rem;
+      /* بزرگ و خوانا */
+      font-weight: 700;
+      /* پررنگ */
+      color: #222;
+      /* تیره و ملایم */
+      margin: 0;
+      /* بدون فاصله اضافی */
+    }
+
+
+
+
+    .news-header .btn-view {
+      background: rgba(0, 123, 255, 0.08);
+      /* خیلی ملایم و شفاف */
+      color: #007bff;
+      padding: 6px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .news-header .btn-view:hover {
+      background: rgba(0, 123, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+
+    .btn-view {
+      background: #98b6e4;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .btn-news {
+      background: #98b6e4;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      width: 10%;
+      float: left;
+      margin-top: 0.5rem;
+      align-self: flex-end;
+    }
+
+    /* ==== اسلایدر ==== */
+    .swiper {
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .slide-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .slide-content img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .slide-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide-text h3 {
+      font-size: 1.1rem;
+    }
+
+    .slide-text p {
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    .slide-text .date {
+      font-size: 0.8rem;
+      color: gray;
+      margin-top: auto;
+    }
+
+    /* کارت‌های کوچک */
+    .news-slider {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      flex: 1;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .card-text {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 0.5rem;
+      transition: background 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card:hover img {
+      transform: scale(1.05);
+    }
+
+    .card:hover .card-text {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    @media (max-width: 768px) {
+      .slide-content {
+    display: block;
+    position: relative;
+  }
+
+  .slide-content img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .slide-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(214, 208, 208, 0.5);
+    color: #fff;
+    padding: 1rem;
+    border-radius: 0 0 10px 10px;
+    opacity: 0;                  /* در حالت عادی پنهان */
+    transform: translateY(20px);  /* کمی پایین‌تر برای انیمیشن */
+    transition: all 0.5s ease;
+  }
+
+  /* وقتی موس روی اسلاید رفت */
+  .slide-content:hover .slide-text {
+    opacity: 1;                  /* ظاهر شود */
+    transform: translateY(0);    /* به جای اصلی */
+  }
+
+  .slide-text h3, .slide-text p, .slide-text .date, .slide-text .btn-news {
+    color: #fff;
+  }
+
+  .slide-text .btn-news {
+    background: rgba(255,255,255,0.2);
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 0.5rem;
+    width: 15%;
+  }
+      .news-slider {
+      flex-direction: column;
+    }
+    }
+
+    
+
+
+
+
+
+
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      background: rgba(0, 0, 0, 0.5);
+      /* دایره نیمه شفاف */
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s;
+
+    }
+
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+      content: none !important;
+      /* ✅ فلش‌های آبی دیفالت پاک می‌شود */
+    }
+
+
+    .swiper-button-next:hover,
+    .swiper-button-prev:hover {
+      background: rgba(0, 0, 0, 0.7);
+      /* هنگام هاور تیره‌تر شود */
+    }
+
+    .arrow-icon {
+      width: 20px;
+      height: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <div class="news-header">
+      <h2>اخبار مهم</h2>
+      <a href="#" class="btn-view">مشاهده همه</a>
+    </div>
+
+    <!-- ✅ اسلایدر عکس + متن -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="slide-content">
+            <img src="image/1.png" alt="خبر ۱">
+            <div class="slide-text">
+              <h3>تیتر خبر شماره ۳</h3>
+              <p class="news-content">
+                توضیح خبر شماره ۳ اینجا قرار می‌گیرد که همراه تصویر اسلاید می‌شود. متن می‌تواند طولانی باشد و در ابتدا
+                کوتاه نمایش داده شود...
+              </p>
+              <span class="date">۱۴۰۴/۶/۲۳ - ۱۶:۱۰</span>
+              <a href="#" class="btn-news">ادامه خبر</a>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="slide-content">
+            <img src="image/2.jpg" alt="خبر ۲">
+            <div class="slide-text">
+              <h3>تیتر خبر شماره ۲</h3>
+              <p>توضیح خبر شماره ۲ اینجا قرار می‌گیرد که همراه تصویر اسلاید می‌شود.</p>
+              <span class="date">۱۴۰۴/۶/۲۳ - ۱۵:۴۵</span>
+              <a href="#" class="btn-news">ادامه خبر</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="slide-content">
+            <img src="image/4.jpg" alt="خبر ۳">
+            <div class="slide-text">
+              <h3>تیتر خبر شماره ۳</h3>
+              <p>توضیح خبر شماره ۳ اینجا قرار می‌گیرد که همراه تصویر اسلاید می‌شود.</p>
+              <span class="date">۱۴۰۴/۶/۲۳ - ۱۶:۱۰</span>
+              <a href="#" class="btn-news">ادامه خبر</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="swiper-button-next">
+        <svg class="arrow-icon" viewBox="0 0 24 24">
+          <path d="M8 4l8 8-8 8" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </div>
+      <div class="swiper-button-prev">
+        <svg class="arrow-icon" viewBox="0 0 24 24">
+          <path d="M16 4l-8 8 8 8" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- کارت‌های کوچک زیر اسلایدر -->
+    <section class="news-slider">
+      <label class="card" data-index="0">
+        <img src="image/1.png" alt="خبر ۱">
+        <div class="card-text">
+          <h4>خبر شماره ۱</h4>
+          <span class="date">۱۴۰۴/۶/۲۳ - ۱۵:۴۵</span>
+        </div>
+      </label>
+
+      <label class="card" data-index="1">
+        <img src="image/2.jpg" alt="خبر ۲">
+        <div class="card-text">
+          <h4>خبر شماره ۲</h4>
+          <span class="date">۱۴۰۴/۶/۲۳ - ۱۴:۵۵</span>
+        </div>
+      </label>
+
+      <label class="card" data-index="3">
+        <img src="image/4.jpg" alt="خبر ۳">
+        <div class="card-text">
+          <h4>خبر شماره ۳</h4>
+          <span class="date">۱۴۰۴/۶/۲۳ - ۱۳:۴۵</span>
+        </div>
+      </label>
+    </section>
+  </main>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    const swiper = new Swiper(".mySwiper", {
+      loop: true,
+      autoplay: { delay: 3000, disableOnInteraction: false },
+      pagination: { el: ".swiper-pagination", clickable: true },
+      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+    });
+
+    // ✅ توقف خودکار هنگام رفتن موس روی اسلایدر
+    const swiperEl = document.querySelector('.mySwiper');
+    swiperEl.addEventListener('mouseenter', () => swiper.autoplay.stop());
+    swiperEl.addEventListener('mouseleave', () => swiper.autoplay.start());
+
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const index = parseInt(card.getAttribute('data-index'));
+        swiper.slideToLoop(index); // slideToLoop برای loop=true مناسب است
+      });
+    });
+    console.log(cards);
+  </script>
+</body>
+
+</html>
